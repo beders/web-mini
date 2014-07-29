@@ -1,0 +1,10 @@
+#!/usr/bin/env jjs
+s = com.sun.net.httpserver.HttpServer.create(new java.net.InetSocketAddress($ARG[0]),0);
+s.createContext("/",function (e) {
+    var j = java.nio.file, p = j.Paths.get(".", e.getRequestURI().getPath()), o = e.getResponseBody();
+    e.sendResponseHeaders(200, p.toFile().length());
+    j.Files.copy(p,o);
+    o.close();
+});
+s.start();
+readLine()
